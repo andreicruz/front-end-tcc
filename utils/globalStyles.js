@@ -17,6 +17,9 @@ export const globalColors = StyleSheet.create({
     whiteText: {
         color: "white"
     },
+    font: {
+        fontFamily: 'BalooTamma2-Regular',
+    }
 });
 
 export const whiteIcon = "white";
