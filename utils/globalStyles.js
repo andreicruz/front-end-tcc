@@ -1,15 +1,18 @@
 import { StyleSheet} from 'react-native';
 
 export const globalAlignments = StyleSheet.create({
-    textToRight: {
-        textAlign: "right"
-    },
     marginComponentToComponent: {
-        marginTop: "15px",
+        marginTop: "25px",
     },
     marginApp: {
         marginLeft: "20px",
         marginRight: "20px"
+    },
+    textToRight: {
+        textAlign: "right"
+    },
+    textToCenter: {
+        textAlign: "center"
     },
 });
 

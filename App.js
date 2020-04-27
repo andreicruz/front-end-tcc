@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import Header from './components/header/header.js';
 import { globalAlignments } from './utils/globalStyles';
 import MyAppText from './components/myAppText/text';
+import Card from './components/cards/card';
 
 export default function App() {
 	return (
@@ -10,7 +11,7 @@ export default function App() {
 			<Header/>
 			<View style={globalAlignments.marginApp}>
 				<View style={globalAlignments.marginApp, globalAlignments.marginComponentToComponent}>
-					<MyAppText text="Open up App.js to start working on your app!" />
+					<Card></Card>
 				</View>
 			</View>
 		</View>
