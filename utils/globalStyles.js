@@ -1,6 +1,9 @@
-import { StyleSheet} from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export const globalAlignments = StyleSheet.create({
+    flex: {
+        flex: 1,
+    },
     marginComponentToComponent: {
         marginTop: 25,
     },
@@ -14,18 +17,28 @@ export const globalAlignments = StyleSheet.create({
     textToCenter: {
         textAlign: "center"
     },
+    droidSafeArea: {
+        paddingTop: Platform.OS === 'android' ? 30 : 0
+    },
 });
 
 export const globalColors = StyleSheet.create({
     whiteText: {
         color: "white"
     },
+    blueText: {
+        color: "#1b75bc"
+    }
 });
 
 export const globalFonts = StyleSheet.create({
+    whiteText: {
+        color: "white"
+    },
+    blueText: {
+        color: "#1b75bc"
+    },
     // font: {
     //     fontFamily: 'BalooTamma2-Regular',
     // }
 });
-
-export const whiteIcon = "white";
