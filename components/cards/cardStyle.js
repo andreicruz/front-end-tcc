@@ -4,20 +4,20 @@ export const styles = StyleSheet.create({
     card: {
         borderColor: '#d6d6d6',
         borderWidth: 1,
-        borderRadius: '6px',
+        borderRadius: 6,
         display: "flex",
         flexDirection: "row",
-        height: '100px',
-        padding: '10px',
+        height: 100,
+        padding: 10,
     },
     item: {
         flex: 1,
     },
     rounded: {
         borderColor: '#d6d6d6',
-        borderRadius: '10px',
+        borderRadius: 10,
         borderWidth: 1,
-        height: '20px',
-        width: '20px',
+        height: 20,
+        width: 20,
     }
 });

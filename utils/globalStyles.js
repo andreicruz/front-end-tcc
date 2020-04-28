@@ -2,11 +2,11 @@ import { StyleSheet} from 'react-native';
 
 export const globalAlignments = StyleSheet.create({
     marginComponentToComponent: {
-        marginTop: "25px",
+        marginTop: 25,
     },
     marginApp: {
-        marginLeft: "20px",
-        marginRight: "20px"
+        marginLeft: 20,
+        marginRight: 20,
     },
     textToRight: {
         textAlign: "right"
@@ -23,9 +23,9 @@ export const globalColors = StyleSheet.create({
 });
 
 export const globalFonts = StyleSheet.create({
-    font: {
-        fontFamily: 'BalooTamma2-Regular',
-    }
+    // font: {
+    //     fontFamily: 'BalooTamma2-Regular',
+    // }
 });
 
 export const whiteIcon = "white";

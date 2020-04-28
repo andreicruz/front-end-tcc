@@ -5,10 +5,10 @@ export const styles = StyleSheet.create({
         backgroundColor: "#1b75bc",
         display: "flex",
         flexDirection: "row",
-        paddingTop: "10px",
-        paddingBottom: "10px",
-        paddingRight: "20px",
-        paddingLeft: "20px",
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingRight: 20,
+        paddingLeft: 20,
     },
     items: {
         flex: 1
