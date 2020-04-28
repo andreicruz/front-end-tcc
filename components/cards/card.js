@@ -11,7 +11,7 @@ export default function Card() {
         <View style={styles.card}>
             <View style={[styles.item, {flex: 1, flexDirection: "row"}]}>
                 <View style={{width: 40}}>
-                    <FontAwesomeIcon icon={ icons.iconFaCamera } size={ 22 } />
+                    <FontAwesomeIcon color={globalFonts.blueText.color} icon={ icons.iconFaCamera } size={ 22 } />
                 </View>
                 <View>
                     <MyAppText text="Usar a câmera" fontSize={22} textColor={globalFonts.blueText.color}/>
