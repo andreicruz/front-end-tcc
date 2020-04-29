@@ -38,7 +38,10 @@ export const globalFonts = StyleSheet.create({
     blueText: {
         color: "#1b75bc"
     },
-    font: {
-        fontFamily: 'BalooTamma2-Regular',
+    blackText: {
+        color: "black"
     }
+    // font: {
+    //     fontFamily: 'BalooTamma2-Regular',
+    // }
 });
