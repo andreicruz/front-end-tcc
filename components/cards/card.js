@@ -6,16 +6,16 @@ import MyAppText from '../myAppText/text';
 import { View } from 'react-native';
 import { globalFonts } from '../../utils/globalStyles';
 
-export default function Card() {
+export default function Card(props) {
     return (
         <View style={ styles.card }>
             <View style={{ display: "flex", flexDirection: "row" }}>
                 <View style={[styles.item, { flex: 1, flexDirection: "row", paddingLeft: 40 }]}>
                     <View>
-                        <FontAwesomeIcon color={globalFonts.blueText.color} icon={ icons.iconFaCamera } size={ 36 } />
+                        <FontAwesomeIcon color={globalFonts.blueText.color} icon={ props.icon } size={ 36 } />
                     </View>
-                    <View style={{ marginTop: 5, marginLeft: 15 }}>
-                        <MyAppText text="Usar a câmera" fontSize={22} textColor={globalFonts.blueText.color}/>
+                    <View style={{ marginTop: 5, marginLeft: 20 }}>
+                        <MyAppText text={props.text} fontSize={22} textColor={globalFonts.blueText.color}/>
                     </View>
                 </View>
                 <View style={[styles.cornerBorder, {flex: 0.1}]}>

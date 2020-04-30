@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { globalFonts } from '../../utils/globalStyles';
 import { useFonts } from '@use-expo/font';
 
 export default function MyAppText(props) {
