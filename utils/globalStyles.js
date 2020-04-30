@@ -5,7 +5,7 @@ export const globalAlignments = StyleSheet.create({
         flex: 1,
     },
     marginComponentToComponent: {
-        marginTop: 45,
+        // marginTop: 45,
     },
     marginApp: {
         marginLeft: 20,
