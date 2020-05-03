@@ -40,6 +40,12 @@ export const globalFonts = StyleSheet.create({
     },
     blackText: {
         color: "black"
+    },
+    darkGrey: {
+        color: '#666666'
+    },
+    mediumGrey: {
+        color: '#5e5e5e'
     }
     // font: {
     //     fontFamily: 'BalooTamma2-Regular',

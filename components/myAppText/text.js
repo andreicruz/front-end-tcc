@@ -6,6 +6,7 @@ export default function MyAppText(props) {
 	const [fontsLoaded] = useFonts({
 		'Baloo-Tamma-Regular': require('../../assets/fonts/BalooTamma2-Regular.ttf'),
 		'Baloo-Tamma-Bold': require('../../assets/fonts/BalooTamma2-Bold.ttf'),
+		'Baloo-Tamma-SemiBold': require('../../assets/fonts/BalooTamma2-SemiBold.ttf'),
 		'Baloo-Tamma-Extrabold': require('../../assets/fonts/BalooTamma2-ExtraBold.ttf'),
 	});
 
@@ -14,7 +15,7 @@ export default function MyAppText(props) {
 		<Text style={{
 			fontSize: props.fontSize !== undefined ? props.fontSize : 14,
 			color: props.textColor !== undefined ? props.textColor : "black",
-			fontFamily: 'Baloo-Tamma-Extrabold',
+			fontFamily: props.fontType !== undefined ? props.fontType : 'Baloo-Tamma-Extrabold',
 		}}>
 			{props.text}
 		</Text>
