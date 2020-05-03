@@ -36,7 +36,7 @@ export default function Card(props) {
                         <View style={styles.leftCardIcon}>
                             <TouchableOpacity style={styles.buttonIcon}>
                                 <Text style={{textAlign: "center"}}>
-                                    <FontAwesomeIcon color={ globalFonts.mediumGrey.color } icon={ props.icon } size={ 20 } />
+                                    <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ props.icon } size={ 20 } />
                                 </Text>
                             </TouchableOpacity>
                         </View>

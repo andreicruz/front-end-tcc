@@ -35,9 +35,12 @@ export const styles = StyleSheet.create({
         height: 40, 
     },
     buttonIcon: {
+        backgroundColor: '#1b75bc',
+        color: 'white',
+        borderColor: 'white',
         borderWidth: 1,
-        borderColor: border,
         borderRadius: 40,
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 16
     }
 });
