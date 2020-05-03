@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <View>
             {cards.map(item => {
-                return (<Card key={item.id} text={item.title} icon={item.icon}/>)
+                return (<Card key={item.id} text={item.title} icon={item.icon} id={item.id} leftCard={item.leftCard}/>)
             })}
         </View>
     );
