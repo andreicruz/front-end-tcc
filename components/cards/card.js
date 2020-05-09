@@ -8,7 +8,7 @@ import { globalFonts } from '../../utils/globalStyles';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function Card(props) {
+export default function Card(props, { navigation }) {
     const RightActions = (progress, dragX) => {
         const scale = dragX.interpolate({
             inputRange: [-100, 0],
