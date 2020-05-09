@@ -44,21 +44,18 @@ export default function Routes() {
                         alignSelf: 'center',
                         fontWeight: 'bold',                        
                     },
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            onPress={() => alert('This is a button!')}                        
+                        >
+                            <Text style={{marginLeft: 20}}>
+                                <FontAwesomeIcon color={ globalFonts.blueText.color } icon={ icons.iconFaArrowLeft } size={ 20 } />
+                            </Text>
+                        </TouchableOpacity>
+                    ),
                 }}
             >
-                <Stack.Screen name='Home' component={Home}
-                    options={{
-                        headerLeft: () => (
-                            <TouchableOpacity
-                                onPress={() => alert('This is a button!')}                        
-                            >
-                                <Text style={{marginLeft: 20}}>
-                                    <FontAwesomeIcon color={ globalFonts.blueText.color } icon={ icons.iconFaArrowLeft } size={ 20 } />
-                                </Text>
-                            </TouchableOpacity>
-                        ),
-                    }}
-                />
+                <Stack.Screen name='Home' component={Home}/>
                 <Stack.Screen name='Camera' component={CameraArea} />
             </Stack.Navigator>
         </NavigationContainer>
