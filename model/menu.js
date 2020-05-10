@@ -5,7 +5,7 @@ export const objects = [
         id: 1, 
         title: 'Usar a câmera', 
         icon: icons.iconFaCamera, 
-        route: 'Camera',
+        route: 'cameraAarea',
         leftCard: { 
             title: 'Utilize sua câmera',
             description: 'É possível utilizar sua câmera para reconhecer textos.',
@@ -14,7 +14,7 @@ export const objects = [
     { 
         id: 2, 
         title: 'Desafios', 
-        route: 'Camera',
+        route: 'Camerxa',
         icon: icons.iconFaList, 
         leftCard: { 
             title: 'Desafios',
