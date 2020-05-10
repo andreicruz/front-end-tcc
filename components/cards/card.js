@@ -8,7 +8,7 @@ import { globalFonts } from '../../utils/globalStyles';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function Card(props, { navigation }) {
+export default function Card(props) {
     const RightActions = (progress, dragX) => {
         const scale = dragX.interpolate({
             inputRange: [-100, 0],
@@ -34,7 +34,9 @@ export default function Card(props, { navigation }) {
                     </View>
                     <View style={{flex: 1, justifyContent: "center"}}>
                         <View style={styles.leftCardIcon}>
-                            <TouchableOpacity style={styles.buttonIcon}>
+                            <TouchableOpacity style={styles.buttonIcon}
+                                onPress={() => props.navigation.navigate(props.route)}
+                            >
                                 <Text style={{textAlign: "center"}}>
                                     <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ props.icon } size={ 20 } />
                                 </Text>

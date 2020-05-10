@@ -1,14 +1,14 @@
 import React from 'react';
-import { View } from 'react-native';
-import Routes from './components/routes/routes';
+import { Routes, Menu } from './components/routes/routes';
 import { StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
 	return (
-		<>
+		<NavigationContainer theme={{colors: {background: 'white'}}}>
 			<StatusBar barStyle="light-content" />
-			<Routes/>
-		</>
+			<Menu/>
+		</NavigationContainer>
 		// <View>			
 		// 	<Header/>
 		// 	<View style={globalAlignments.marginApp}>

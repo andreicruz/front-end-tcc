@@ -1,17 +1,17 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack'
-import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, TouchableOpacity, Text} from 'react-native';
-import { globalFonts, globalAlignments, globalColors } from '../../utils/globalStyles';
+import { globalFonts } from '../../utils/globalStyles';
 import { icons } from '../../utils/icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Home from '../home/home';
 import CameraArea from '../cameraArea/cameraArea';
 
 
 const Stack = createStackNavigator();
-
+const Drawer = createDrawerNavigator();
 
 export const styles = StyleSheet.create({
 
@@ -29,35 +29,42 @@ export const styles = StyleSheet.create({
     }
 });
 
-export default function Routes() {
+export const Routes = (props) => {
     function teste() {
         alert('oi');
     }
 
     return (
-        <NavigationContainer theme={{colors: {background: 'white'}}}>
-            <Stack.Navigator initialRouteName='Home'
-                screenOptions={{
-                    headerStyle: [styles.shadow],
-                    headerTintColor: '#1b75bc',
-                    headerTitleStyle: {
-                        alignSelf: 'center',
-                        fontWeight: 'bold',                        
-                    },
-                    headerLeft: () => (
-                        <TouchableOpacity
-                            onPress={() => alert('This is a button!')}                        
-                        >
-                            <Text style={{marginLeft: 20}}>
-                                <FontAwesomeIcon color={ globalFonts.blueText.color } icon={ icons.iconFaArrowLeft } size={ 20 } />
-                            </Text>
-                        </TouchableOpacity>
-                    ),
-                }}
-            >
-                <Stack.Screen name='Home' component={Home}/>
-                <Stack.Screen name='Camera' component={CameraArea} />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <Stack.Navigator initialRouteName='Home'
+            screenOptions={{
+                headerStyle: [styles.shadow],
+                headerTintColor: '#1b75bc',
+                headerTitleStyle: {
+                    alignSelf: 'center',
+                    fontWeight: 'bold',                        
+                },
+                headerLeft: () => (
+                    <TouchableOpacity
+                        onPress={() => props.navigation.openDrawer()}                        
+                    >
+                        <Text style={{marginLeft: 20}}>
+                            <FontAwesomeIcon color={ globalFonts.blueText.color } icon={ icons.iconFaArrowLeft } size={ 20 } />
+                        </Text>
+                    </TouchableOpacity>
+                ),
+            }}
+        >
+            <Stack.Screen name='Home' component={Home}/>
+            <Stack.Screen name='Camera' component={CameraArea} />
+        </Stack.Navigator>
+    );
+}
+
+export const Menu = () => {
+    return (
+        <Drawer.Navigator initialRouteName='Home'>
+            <Drawer.Screen name='Home' component={Routes}/>
+            <Drawer.Screen name='Camera' component={CameraArea} />
+        </Drawer.Navigator>
     );
 }
