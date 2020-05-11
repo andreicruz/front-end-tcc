@@ -5,11 +5,15 @@ export const globalAlignments = StyleSheet.create({
         flex: 1,
     },
     marginComponentToComponent: {
-        // marginTop: 45,
+        marginTop: 40,
     },
     marginApp: {
         marginLeft: 20,
         marginRight: 20,
+    },
+    centerAll: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     textToRight: {
         textAlign: "right"
@@ -46,7 +50,13 @@ export const globalFonts = StyleSheet.create({
     },
     mediumGrey: {
         color: '#5e5e5e'
-    }
+    },
+    balooExtrabold: {
+        fontFamily: 'Baloo-Tamma-Extrabold',
+    },
+    balooSemibold: {
+        fontFamily: 'Baloo-Tamma-SemiBold',
+    },
     // font: {
     //     fontFamily: 'BalooTamma2-Regular',
     // }
