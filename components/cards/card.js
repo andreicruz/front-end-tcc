@@ -34,9 +34,11 @@ export default function Card(props) {
                     </View>
                     <View style={{flex: 1, justifyContent: "center"}}>
                         <View style={styles.leftCardIcon}>
-                            <TouchableOpacity style={styles.buttonIcon}>
+                            <TouchableOpacity style={styles.buttonIcon}
+                                onPress={() => props.navigation.navigate(props.route)}
+                            >
                                 <Text style={{textAlign: "center"}}>
-                                    <FontAwesomeIcon color={ globalFonts.mediumGrey.color } icon={ props.icon } size={ 20 } />
+                                    <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ props.icon } size={ 20 } />
                                 </Text>
                             </TouchableOpacity>
                         </View>

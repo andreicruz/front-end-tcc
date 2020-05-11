@@ -1,0 +1,17 @@
+import React from 'react';
+import { View, Text, Button} from 'react-native';
+import { routes } from '../../utils/routeNames';
+
+export default function AreaController(props) {
+    return (
+        <View>
+            <Text>Ola</Text>
+            <View style={{marginTop: 40}}>
+                <Button
+                    onPress={() => props.navigation.navigate(routes[0].route)}
+                    title="Go to Home"
+                />
+            </View>
+        </View>
+    );
+}

@@ -1,19 +1,19 @@
 import React from 'react';
-import { View } from 'react-native';
-import Header from './components/header/header.js';
-import { globalAlignments } from './utils/globalStyles';
-import Home from './components/home/home';
-
+import { Routes, Menu } from './components/routes/routes';
+import { StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
 	return (
-		<View>			
-			<Header/>
-			<View style={globalAlignments.marginApp}>
-				<View>
-					<Home />
-				</View>
-			</View>
-		</View>
+		<NavigationContainer theme={{colors: {background: 'white'}}}>
+			<StatusBar barStyle="light-content" />
+			<Menu/>
+		</NavigationContainer>
+		// <View>			
+		// 	<Header/>
+		// 	<View style={globalAlignments.marginApp}>
+		// 		<Home />
+		// 	</View>
+		// </View>
 	);
 }
