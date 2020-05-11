@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, TextInput} from 'react-native';
+import { View, TouchableOpacity, TextInput, Text} from 'react-native';
 import { globalAlignments, globalFonts, globalColors } from '../../utils/globalStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { icons } from '../../utils/icons';
@@ -49,10 +49,7 @@ export default function AreaController(props) {
                 <View style={{ marginTop: 20}}>
                     { loadedFont ? (
                         <View style={{ flexDirection: "row" }}>
-                            <View>
-                                <FontAwesomeIcon color={ globalFonts.blueText.color } icon={ icons.iconFaCamera } size={ 40 } />
-                            </View>
-                            <View>
+                            <View style={{ flex: 1, marginTop: 5}}>
                                 <TextInput
                                     underlineColorAndroid="white"
                                     style={[styles.input, isFocused ? styles.inputFocus : styles.input]}
@@ -61,6 +58,13 @@ export default function AreaController(props) {
                                     value={value}
                                     underlineColorAndroid='rgba(0,0,0,0)'
                                 />
+                            </View>
+                            <View style={{ marginLeft: 20 }}>
+                                <TouchableOpacity style={styles.buttonIcon}>
+                                    <Text style={{textAlign: "center"}}>
+                                        <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ icons.iconFaMicrophone } size={ 20 } />
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
 			        ) : (

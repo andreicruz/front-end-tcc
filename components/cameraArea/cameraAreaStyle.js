@@ -13,5 +13,16 @@ export const styles = StyleSheet.create({
     },
     inputFocus: {
         borderColor: globalColors.blueText.color,
+    },
+    buttonIcon: {
+        backgroundColor: '#1b75bc',
+        color: 'white',
+        borderColor: 'white',
+        borderRadius: 20,
+        padding: 10,
+        // borderWidth: 1,
+        // borderRadius: 40,
+        // paddingVertical: 10,
+        // paddingHorizontal: 16
     }
 });
