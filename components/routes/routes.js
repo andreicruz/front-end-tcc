@@ -13,6 +13,8 @@ import { createDrawerNavigator,
 
 import Home from '../home/home';
 import CameraArea from '../cameraArea/cameraArea';
+import CameraComponent from '../camera/camera';
+
 import { routes } from '../../utils/routeNames';
 
 
@@ -68,6 +70,7 @@ export const Routes = (props) => {
         >
             <Stack.Screen name={routes[0].route} component={Home} options={{ title: routes[0].title }}/>
             <Stack.Screen name={routes[1].route} component={CameraArea} options={{ title: routes[1].title }}/>
+            <Stack.Screen name={routes[2].route} component={CameraComponent} options={{ headerShown: false }}/>
         </Stack.Navigator>
     );
 }
