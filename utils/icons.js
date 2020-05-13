@@ -1,4 +1,4 @@
-import { faBars, faCamera, faArrowLeft, faArrowRight, faHeart, faList, faHome, faMicrophone } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faCamera, faArrowLeft, faArrowRight, faHeart, faList, faHome, faMicrophone, faRedo } from '@fortawesome/free-solid-svg-icons'
 
 export const icons = {
     iconFaBars: faBars,
@@ -9,4 +9,5 @@ export const icons = {
     iconFaList: faList,
     iconFaHome: faHome,
     iconFaMicrophone: faMicrophone,
+    iconFaRedo: faRedo,
 };

@@ -37,8 +37,12 @@ export default function AreaController(props) {
 	}
 	
 	function cameraHandler() {
-		props.navigation.navigate(routes[2].route)
-    }
+		props.navigation.navigate(routes[2].route, { functionShowModal: showModal})
+	}
+	
+	function showModal() {
+		setVisibilityCamera(!isVisibleCamera);
+	}
 
     return (
 		<>
@@ -84,6 +88,9 @@ export default function AreaController(props) {
 								value={value}
 							/>
 						)}
+					</View>
+					<View>
+						{isVisibleCamera ? <Text>estou visivel</Text> : <Text>ESTOU off</Text>}
 					</View>
 				</View>
 			</View>

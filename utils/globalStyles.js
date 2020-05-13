@@ -61,3 +61,14 @@ export const globalFonts = StyleSheet.create({
     //     fontFamily: 'BalooTamma2-Regular',
     // }
 });
+
+
+export const globalButtons = StyleSheet.create({
+    roundedButton: {
+        backgroundColor: 'white',
+        color: 'white',
+        borderColor: 'white',
+        borderRadius: 20,
+        padding: 10,
+    }
+});
