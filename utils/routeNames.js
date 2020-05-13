@@ -8,4 +8,8 @@ export const routes = [
         route: 'cameraAarea',
         title: 'Câmera'
     },
+    {  
+        route: 'takePhoto',
+        title: 'Câmera'
+    },
 ];
