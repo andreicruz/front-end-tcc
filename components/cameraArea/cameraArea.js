@@ -10,13 +10,15 @@ import { styles } from './cameraAreaStyle';
 import { text } from '../../utils/texts';
 
 import { routes } from '../../utils/routeNames';
+import MyModal from '../modal/modal';
 
 export default function AreaController(props) {
     const [value, setText] = useState(text.areaCamera.inputPlaceholder);
     const [isFocused, setFocus] = useState(false);
 
     const [loadedFont, setFont] = useState(false);
-	const [isVisibleCamera, setVisibilityCamera] = useState(false);
+	const [isPhotoTaken, setPhotoTaken] = useState(false);
+	const [modalVisible, setModalVisible] = useState(false);
 
 	useEffect(() => {
 		async function teste() {
@@ -41,7 +43,7 @@ export default function AreaController(props) {
 	}
 	
 	function showModal() {
-		setVisibilityCamera(!isVisibleCamera);
+		setModalVisible(!modalVisible);
 	}
 
     return (
@@ -89,10 +91,18 @@ export default function AreaController(props) {
 							/>
 						)}
 					</View>
-					<View>
-						{isVisibleCamera ? <Text>estou visivel</Text> : <Text>ESTOU off</Text>}
-					</View>
 				</View>
+				{modalVisible ? 
+					<MyModal 
+						modalTitle={text.areaCamera.modalTitle}
+						buttonIcon={text.areaCamera.buttonIcon}
+						buttonTitle={text.areaCamera.buttonTitle} 
+						modalVisible={modalVisible} 
+						closeFunction={setModalVisible}
+					/> 
+					: 
+					null
+				}
 			</View>
 		</>
     );
