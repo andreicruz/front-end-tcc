@@ -29,14 +29,13 @@ export default function CameraComponent(props) {
     async function takePhoto(){
         const options = { quality: 0.5, base64: true, onPictureSaved: onPhotoTake  };
         const data = await camera.current.takePictureAsync(options);
-        
-        props.navigation.goBack();
-        props.route.params.functionShowModal();
     }
 
     function onPhotoTake(data, error) {
         if(data) {
-            console.log(data.uri, '<<<<<<<<<<<<<<<<<<<<<');
+            console.log(data.uri);
+            props.navigation.goBack();
+            props.route.params.functionShowModal();
         } 
         
         if(error) {
