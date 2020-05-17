@@ -26,7 +26,7 @@ export default function MyModal(props) {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <View style={{flexDirection: "row"}}>
-                            <MyAppText fontType={globalFonts.balooExtrabold.fontFamily} text={'Texto Reconhecido'} fontSize={26} textColor={globalFonts.blackText.color}/>
+                            <MyAppText fontType={globalFonts.balooExtrabold.fontFamily} text={props.modalTitle} fontSize={26} textColor={globalFonts.blackText.color}/>
                             <TouchableOpacity style={[styles.roundedButton, {bottom: 20, left: 30}]} onPress={() => props.closeFunction(false)}>
                                 <Text style={{top: 2}}>
                                     <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ icons.iconFaTimes } size={ 20 } />
@@ -38,9 +38,9 @@ export default function MyModal(props) {
                         </Text>
                         <View style={{flexDirection:"row", marginTop: 20}}>
                             <TouchableOpacity style={{flex: 1, flexDirection: "row", backgroundColor: globalColors.blueText.color, padding: 10, borderRadius: 10, alignItems: "center", justifyContent: "center"}}>
-                                <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ icons.iconFaBullhorn } size={ 28 } />
+                                <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ props.buttonIcon } size={ 28 } />
                                 <View style={{marginLeft: 20, marginTop: 5}}>
-                                    <MyAppText fontType={globalFonts.balooExtrabold.fontFamily} text={'Escutar'} fontSize={24} textColor={globalFonts.whiteText.color}/>
+                                    <MyAppText fontType={globalFonts.balooExtrabold.fontFamily} text={props.buttonTitle} fontSize={24} textColor={globalFonts.whiteText.color}/>
                                 </View>
                             </TouchableOpacity>
                         </View>

@@ -96,7 +96,17 @@ export default function AreaController(props) {
 						)}
 					</View>
 				</View>
-				{modalVisible ? <MyModal modalVisible={modalVisible} closeFunction={setModalVisible}/> : null}
+				{modalVisible ? 
+					<MyModal 
+						modalTitle={text.areaCamera.modalTitle}
+						buttonIcon={text.areaCamera.buttonIcon}
+						buttonTitle={text.areaCamera.buttonTitle} 
+						modalVisible={modalVisible} 
+						closeFunction={setModalVisible}
+					/> 
+					: 
+					null
+				}
 			</View>
 		</>
     );
