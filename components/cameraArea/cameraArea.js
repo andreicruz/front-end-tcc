@@ -46,10 +46,6 @@ export default function AreaController(props) {
 		setModalVisible(!modalVisible);
 	}
 
-	function closeModal() {
-		setModalVisible(false);
-	}
-
     return (
 		<>
 			<View style={[globalAlignments.marginApp, globalAlignments.marginComponentToComponent]}>
