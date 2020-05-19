@@ -33,9 +33,9 @@ export default function CameraComponent(props) {
 
     function onPhotoTake(data, error) {
         if(data) {
-            console.log(data.uri);
+            // console.log(data.uri);
             props.navigation.goBack();
-            props.route.params.functionShowModal();
+            props.route.params.functionShowModal(data.uri);
         } 
         
         if(error) {
