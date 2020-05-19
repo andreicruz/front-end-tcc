@@ -13,7 +13,8 @@ import { routes } from '../../utils/routeNames';
 import MyModal from '../modal/modal';
 
 export default function AreaController(props) {
-    const [value, setText] = useState(text.areaCamera.inputPlaceholder);
+	const [value, setText] = useState(text.areaCamera.inputPlaceholder);
+	const [modalText, setModalText] = useState('');
     const [isFocused, setFocus] = useState(false);
 
     const [loadedFont, setFont] = useState(false);
@@ -42,8 +43,25 @@ export default function AreaController(props) {
 		props.navigation.navigate(routes[2].route, { functionShowModal: showModal})
 	}
 	
-	function showModal() {
+	async function showModal(file) {
+		var request = await callApi(file);
+		console.log(file);
+		// setModalText(request.type);
 		setModalVisible(!modalVisible);
+	}
+
+	async function callApi(image) {
+		try {
+			var response = await fetch(
+				'https://backend-node-tcc.us-south.cf.appdomain.cloud/health',
+			);
+			console.log('executei a funcao call api')
+			// var json = await response.json();
+			return response;
+		} catch (error) {
+			// console.error(error);
+			return error;
+		}
 	}
 
     return (
@@ -93,7 +111,8 @@ export default function AreaController(props) {
 					</View>
 				</View>
 				{modalVisible ? 
-					<MyModal 
+					<MyModal
+						modalText={modalText}
 						modalTitle={text.areaCamera.modalTitle}
 						buttonIcon={text.areaCamera.buttonIcon}
 						buttonTitle={text.areaCamera.buttonTitle} 
