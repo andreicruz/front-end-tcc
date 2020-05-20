@@ -33,15 +33,14 @@ export default function CameraComponent(props) {
 
     function onPhotoTake(data, error) {
         if(data) {
-            // console.log(data.uri);
             props.navigation.goBack();
-            props.route.params.functionShowModal(data.uri);
+            props.route.params.functionShowModal(data.uri, data.base64);
         } 
         
         if(error) {
             console.log(error)
         }
-    } 
+    }
 
     return (
         <View style={{ flex: 1 }}>

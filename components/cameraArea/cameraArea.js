@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, TextInput, Text} from 'react-native';
+import { View, TouchableOpacity, TextInput, Text, Image} from 'react-native';
 import { globalAlignments, globalFonts, globalColors } from '../../utils/globalStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { icons } from '../../utils/icons';
 import * as Font from 'expo-font';
+import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
+import * as Permissions from 'expo-permissions';
+import { captureRef } from 'react-native-view-shot';
 
 import MyAppText from '../myAppText/text';
 import { styles } from './cameraAreaStyle';
@@ -15,10 +19,9 @@ import MyModal from '../modal/modal';
 export default function AreaController(props) {
 	const [value, setText] = useState(text.areaCamera.inputPlaceholder);
 	const [modalText, setModalText] = useState('');
-    const [isFocused, setFocus] = useState(false);
-
+	const [isFocused, setFocus] = useState(false);
+	const [uriImage, setImage] = useState(null);
     const [loadedFont, setFont] = useState(false);
-	const [isPhotoTaken, setPhotoTaken] = useState(false);
 	const [modalVisible, setModalVisible] = useState(false);
 
 	useEffect(() => {
@@ -40,26 +43,32 @@ export default function AreaController(props) {
 	}
 	
 	function cameraHandler() {
-		props.navigation.navigate(routes[2].route, { functionShowModal: showModal})
+		props.navigation.navigate(routes[2].route, { functionShowModal: showModal});
 	}
 	
-	async function showModal(file) {
-		var request = await callApi(file);
-		console.log(file);
-		// setModalText(request.type);
-		setModalVisible(!modalVisible);
+	function showModal(file, base64) {
+		setImage(file);
+		callTextRecognition(file, base64);		
 	}
 
-	async function callApi(image) {
+	async function callTextRecognition(file, base64) {
 		try {
-			var response = await fetch(
-				'https://backend-node-tcc.us-south.cf.appdomain.cloud/health',
+			var fetch = await fetch(
+				'http://192.168.0.103:3000/upload', {
+					method: 'POST',
+					headers: {
+					  Accept: 'application/json',
+					  'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+					  file: base64
+					})
+				}
 			);
-			console.log('executei a funcao call api')
-			// var json = await response.json();
-			return response;
+			const response = await fecth.json();
+			setModalText(content.text);
+			setModalVisible(!modalVisible);
 		} catch (error) {
-			// console.error(error);
 			return error;
 		}
 	}
@@ -120,6 +129,15 @@ export default function AreaController(props) {
 						closeFunction={setModalVisible}
 					/> 
 					: 
+					null
+				}
+          		{uriImage !== null ? 
+					<Image
+						source={{ uri: uriImage }}
+						style={{ width: 300, height: 300 }}
+						resizeMode="contain"
+					/>
+					:
 					null
 				}
 			</View>
