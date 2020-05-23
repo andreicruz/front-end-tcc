@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, TextInput, Text, Image} from 'react-native';
+import { View, TouchableOpacity, TextInput, Text, Image, ActivityIndicator} from 'react-native';
 import { globalAlignments, globalFonts, globalColors } from '../../utils/globalStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { icons } from '../../utils/icons';
@@ -23,6 +23,7 @@ export default function AreaController(props) {
 	const [uriImage, setImage] = useState(null);
     const [loadedFont, setFont] = useState(false);
 	const [modalVisible, setModalVisible] = useState(false);
+	const [isRequesting, setRequestStatus] = useState(false);
 
 	useEffect(() => {
 		async function teste() {
@@ -47,11 +48,12 @@ export default function AreaController(props) {
 	}
 	
 	function showModal(file, base64) {
-		setImage(file);
+		// setImage(file);
 		callTextRecognition(file, base64);		
 	}
 
 	async function callTextRecognition(file, base64) {
+		setRequestStatus(true);
 		try {
 			await fetch('http://192.168.0.103:3000/upload', {
 				method: 'POST',
@@ -65,10 +67,12 @@ export default function AreaController(props) {
 			})
 			.then(response => response.json())
 			.then(json => {
-				setModalText(json.text)
-				setModalVisible(true)
+				setRequestStatus(false);
+				setModalText(json.text);
+				setModalVisible(true);
 			})
 		} catch (error) {
+			setRequestStatus(false);
 			return error;
 		}
 	}
@@ -78,7 +82,12 @@ export default function AreaController(props) {
 			<View style={[globalAlignments.marginApp, globalAlignments.marginComponentToComponent]}>
 				<View style={{ flexDirection: "column"}}>
 					<TouchableOpacity style={{backgroundColor: globalColors.blueText.color, borderRadius: 10}}
-						onPress={() => cameraHandler()}
+						onPress={() => {
+							isRequesting ? 
+								function(){}
+							:
+								cameraHandler()
+						}}
 					>
 						<View style={[globalAlignments.centerAll, { paddingVertical: 30 }]}>
 							<View>
@@ -97,7 +106,13 @@ export default function AreaController(props) {
 										underlineColorAndroid="white"
 										style={[styles.input, isFocused ? styles.inputFocus : styles.input]}
 										onChangeText={text => setText(text)}
-										onFocus={() => focusHandler()}
+										editable={!isRequesting}
+										onFocus={() => {
+											isRequesting ? 
+												function(){}
+											:
+												focusHandler()
+										}}
 										value={value}
 										underlineColorAndroid='rgba(0,0,0,0)'
 									/>
@@ -128,6 +143,13 @@ export default function AreaController(props) {
 						modalVisible={modalVisible} 
 						closeFunction={setModalVisible}
 					/> 
+					: 
+					null
+				}
+				{isRequesting ? 
+					<View style={{flex: 1, justifyContent: "center", flexDirection: "row"}}>
+						<ActivityIndicator size={90} color={globalColors.blueText.color} />
+					</View>
 					: 
 					null
 				}
