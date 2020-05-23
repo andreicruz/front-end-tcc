@@ -53,21 +53,21 @@ export default function AreaController(props) {
 
 	async function callTextRecognition(file, base64) {
 		try {
-			var fetch = await fetch(
-				'http://192.168.0.103:3000/upload', {
-					method: 'POST',
-					headers: {
-					  Accept: 'application/json',
-					  'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-					  file: base64
-					})
-				}
-			);
-			const response = await fecth.json();
-			setModalText(content.text);
-			setModalVisible(!modalVisible);
+			await fetch('http://192.168.0.103:3000/upload', {
+				method: 'POST',
+				headers: {
+				  Accept: 'application/json',
+				  'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+				  file: base64
+				})
+			})
+			.then(response => response.json())
+			.then(json => {
+				setModalText(json.text)
+				setModalVisible(true)
+			})
 		} catch (error) {
 			return error;
 		}
