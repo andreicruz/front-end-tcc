@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import {
   Alert,
   Modal,
@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import MyAppText from "../myAppText/text";
-import { globalFonts, globalButtons, globalColors } from "../../utils/globalStyles";
+import { globalFonts, globalColors } from "../../utils/globalStyles";
 import { icons } from "../../utils/icons";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
@@ -34,7 +34,7 @@ export default function MyModal(props) {
                             </TouchableOpacity>
                         </View>
                         <Text style={{textAlign: "justify"}}>
-                            <MyAppText fontType={globalFonts.balooSemibold.fontFamily} text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed metus auctor, sollicitudin quam et, lobortis '} fontSize={20} textColor={globalFonts.blackText.color}/>
+                            <MyAppText fontType={globalFonts.balooSemibold.fontFamily} text={props.modalText} fontSize={20} textColor={globalFonts.blackText.color}/>
                         </Text>
                         <View style={{flexDirection:"row", marginTop: 20}}>
                             <TouchableOpacity style={{flex: 1, flexDirection: "row", backgroundColor: globalColors.blueText.color, padding: 10, borderRadius: 10, alignItems: "center", justifyContent: "center"}}>

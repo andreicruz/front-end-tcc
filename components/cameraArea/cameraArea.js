@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, TextInput, Text} from 'react-native';
+import { View, TouchableOpacity, TextInput, Text, Image, ActivityIndicator} from 'react-native';
 import { globalAlignments, globalFonts, globalColors } from '../../utils/globalStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { icons } from '../../utils/icons';
 import * as Font from 'expo-font';
+import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
+import * as Permissions from 'expo-permissions';
+import { captureRef } from 'react-native-view-shot';
 
 import MyAppText from '../myAppText/text';
 import { styles } from './cameraAreaStyle';
@@ -13,12 +17,13 @@ import { routes } from '../../utils/routeNames';
 import MyModal from '../modal/modal';
 
 export default function AreaController(props) {
-    const [value, setText] = useState(text.areaCamera.inputPlaceholder);
-    const [isFocused, setFocus] = useState(false);
-
+	const [value, setText] = useState(text.areaCamera.inputPlaceholder);
+	const [modalText, setModalText] = useState('');
+	const [isFocused, setFocus] = useState(false);
+	const [uriImage, setImage] = useState(null);
     const [loadedFont, setFont] = useState(false);
-	const [isPhotoTaken, setPhotoTaken] = useState(false);
 	const [modalVisible, setModalVisible] = useState(false);
+	const [isRequesting, setRequestStatus] = useState(false);
 
 	useEffect(() => {
 		async function teste() {
@@ -39,11 +44,38 @@ export default function AreaController(props) {
 	}
 	
 	function cameraHandler() {
-		props.navigation.navigate(routes[2].route, { functionShowModal: showModal})
+		props.navigation.navigate(routes[2].route, { functionShowModal: showModal});
 	}
 	
-	function showModal() {
-		setModalVisible(!modalVisible);
+	function showModal(file, base64) {
+		// setImage(file);
+		callTextRecognition(file, base64);		
+	}
+
+	async function callTextRecognition(file, base64) {
+		setRequestStatus(true);
+		props.route.params.functionHandleStatusRequestion(true);
+		try {
+			await fetch('http://192.168.0.103:3000/upload', {
+				method: 'POST',
+				headers: {
+				  Accept: 'application/json',
+				  'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+				  file: base64
+				})
+			})
+			.then(response => response.json())
+			.then(json => {
+				setRequestStatus(false);
+				setModalText(json.text);
+				setModalVisible(true);
+			})
+		} catch (error) {
+			setRequestStatus(false);
+			return error;
+		}
 	}
 
     return (
@@ -51,7 +83,12 @@ export default function AreaController(props) {
 			<View style={[globalAlignments.marginApp, globalAlignments.marginComponentToComponent]}>
 				<View style={{ flexDirection: "column"}}>
 					<TouchableOpacity style={{backgroundColor: globalColors.blueText.color, borderRadius: 10}}
-						onPress={() => cameraHandler()}
+						onPress={() => {
+							isRequesting ? 
+								function(){}
+							:
+								cameraHandler()
+						}}
 					>
 						<View style={[globalAlignments.centerAll, { paddingVertical: 30 }]}>
 							<View>
@@ -70,7 +107,13 @@ export default function AreaController(props) {
 										underlineColorAndroid="white"
 										style={[styles.input, isFocused ? styles.inputFocus : styles.input]}
 										onChangeText={text => setText(text)}
-										onFocus={() => focusHandler()}
+										editable={!isRequesting}
+										onFocus={() => {
+											isRequesting ? 
+												function(){}
+											:
+												focusHandler()
+										}}
 										value={value}
 										underlineColorAndroid='rgba(0,0,0,0)'
 									/>
@@ -93,7 +136,8 @@ export default function AreaController(props) {
 					</View>
 				</View>
 				{modalVisible ? 
-					<MyModal 
+					<MyModal
+						modalText={modalText}
 						modalTitle={text.areaCamera.modalTitle}
 						buttonIcon={text.areaCamera.buttonIcon}
 						buttonTitle={text.areaCamera.buttonTitle} 
@@ -101,6 +145,22 @@ export default function AreaController(props) {
 						closeFunction={setModalVisible}
 					/> 
 					: 
+					null
+				}
+				{isRequesting ? 
+					<View style={{flex: 1, justifyContent: "center", flexDirection: "row"}}>
+						<ActivityIndicator size={90} color={globalColors.blueText.color} />
+					</View>
+					: 
+					null
+				}
+          		{uriImage !== null ? 
+					<Image
+						source={{ uri: uriImage }}
+						style={{ width: 300, height: 300 }}
+						resizeMode="contain"
+					/>
+					:
 					null
 				}
 			</View>

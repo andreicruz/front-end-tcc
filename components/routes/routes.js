@@ -48,6 +48,12 @@ export const styles = StyleSheet.create({
 });
 
 export const Routes = (props) => {
+    const [isRequesting, setRequestingStaus] = useState(false);
+
+    function handleStatusRequesting(status) {
+        setRequestingStaus(status);
+    }
+
     return (
         <Stack.Navigator initialRouteName='Home'
             screenOptions={{
@@ -68,15 +74,34 @@ export const Routes = (props) => {
                 ),
             }}
         >
-            <Stack.Screen name={routes[0].route} component={Home} options={{ title: routes[0].title }}/>
-            <Stack.Screen name={routes[1].route} component={CameraArea} options={{ title: routes[1].title }}/>
-            <Stack.Screen name={routes[2].route} component={CameraComponent} options={{ headerShown: false }}/>
+            <Stack.Screen
+                name={routes[0].route} component={Home}
+                options={{ title: routes[0].title }} 
+                initialParams={{ functionHandleStatusRequestion: handleStatusRequesting }}
+            />
+            <Stack.Screen
+                name={routes[1].route} 
+                component={CameraArea}
+                options={{ title: routes[1].title }}
+                initialParams={{ functionHandleStatusRequestion: handleStatusRequesting }}
+            />
+            <Stack.Screen 
+                name={routes[2].route} 
+                component={CameraComponent} 
+                options={{ headerShown: false }}
+                initialParams={{ functionHandleStatusRequestion: handleStatusRequesting }}
+            />
         </Stack.Navigator>
     );
 }
 
 function CustomDrawerContent(props) {
     const [loadedFont, setFont] = useState(false);
+        const [isRequesting, setRequestingStaus] = useState(false);
+    
+    function handleStatusRequesting(status) {
+        setRequestingStaus(status);
+    }
 
 	useEffect(() => {
 		async function teste() {
@@ -97,9 +122,25 @@ function CustomDrawerContent(props) {
                     </View>
                     <View style={{marginTop: 10}}>
                         { loadedFont ? (
-                            <DrawerItem label="Início" onPress={() => props.navigation.navigate(routes[0].route, { screen: 'Home' })} labelStyle={[styles.label, {fontFamily: 'Baloo-Tamma-SemiBold'}]}/>
+                            <DrawerItem label="Início" onPress={() => {
+                                isRequesting ?
+                                    function(){}
+                                    :
+                                    props.navigation.navigate(routes[0].route, { screen: 'Home' })
+                                } 
+                            }
+                                labelStyle={[styles.label, {fontFamily: 'Baloo-Tamma-SemiBold'}]}
+                            />
                         ) : (
-                            <DrawerItem label="Início" onPress={() => props.navigation.navigate(routes[0].route, { screen: 'Home' })} labelStyle={[styles.label]}/>
+                            <DrawerItem label="Início" onPress={() => {
+                                isRequesting ?
+                                    function(){}
+                                    :
+                                    props.navigation.navigate(routes[0].route, { screen: 'Home' })
+                                } 
+                            }
+                                labelStyle={[styles.label]}
+                            />
                         )}
                     </View>
                 </View>
@@ -109,7 +150,14 @@ function CustomDrawerContent(props) {
                     </View>
                     <View style={{marginTop: 10}}>
                         { loadedFont ? (
-                            <DrawerItem label="Câmera" onPress={() => props.navigation.navigate(routes[1].route)} labelStyle={[styles.label, {fontFamily: 'Baloo-Tamma-SemiBold'}]}/>
+                            <DrawerItem label="Câmera" onPress={() => {
+                                    isRequesting ? 
+                                        function(){}
+                                    :
+                                        props.navigation.navigate(routes[1].route, { functionHandleStatusRequestion: handleStatusRequesting})
+                                }
+                            } 
+                                labelStyle={[styles.label, {fontFamily: 'Baloo-Tamma-SemiBold'}]}/>
                         ) : (
                             <DrawerItem label="Câmera" onPress={() => props.navigation.navigate(routes[1].route)} labelStyle={[styles.label]}/>
                         )}                        
