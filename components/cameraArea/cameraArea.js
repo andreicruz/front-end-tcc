@@ -54,6 +54,7 @@ export default function AreaController(props) {
 
 	async function callTextRecognition(file, base64) {
 		setRequestStatus(true);
+		props.route.params.functionHandleStatusRequestion(true);
 		try {
 			await fetch('http://192.168.0.103:3000/upload', {
 				method: 'POST',
