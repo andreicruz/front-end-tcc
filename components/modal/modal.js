@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from 'react';
 import {
   Alert,
   Modal,
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import MyAppText from "../myAppText/text";
 import { globalFonts, globalColors } from "../../utils/globalStyles";
@@ -13,6 +14,12 @@ import { icons } from "../../utils/icons";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function MyModal(props) {
+    const [isRequesting, setRequestStatus] = useState(false);
+
+    function handleRequestStatus(status) {
+        setRequestStatus(status);
+    }
+
     return (
         <View style={styles.centeredView}>
             <Modal
@@ -36,14 +43,31 @@ export default function MyModal(props) {
                         <Text style={{textAlign: "justify"}}>
                             <MyAppText fontType={globalFonts.balooSemibold.fontFamily} text={props.modalText} fontSize={20} textColor={globalFonts.blackText.color}/>
                         </Text>
-                        <View style={{flexDirection:"row", marginTop: 20}}>
-                            <TouchableOpacity style={{flex: 1, flexDirection: "row", backgroundColor: globalColors.blueText.color, padding: 10, borderRadius: 10, alignItems: "center", justifyContent: "center"}}>
-                                <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ props.buttonIcon } size={ 28 } />
-                                <View style={{marginLeft: 20, marginTop: 5}}>
-                                    <MyAppText fontType={globalFonts.balooExtrabold.fontFamily} text={props.buttonTitle} fontSize={24} textColor={globalFonts.whiteText.color}/>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
+                        {props.buttonIsVisible ?
+                            <View style={{flexDirection:"row", marginTop: 20}}>
+                                <TouchableOpacity 
+                                    style={{flex: 1, flexDirection: "row", backgroundColor: globalColors.blueText.color, padding: 10, borderRadius: 10, alignItems: "center", justifyContent: "center"}}
+                                    onPress={() => {
+                                        handleRequestStatus(true);
+                                        props.buttonFunction.functionHandleModalButton({functionHandleRequestModal: handleRequestStatus})
+                                    }}
+                                >
+                                    <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ props.buttonIcon } size={ 28 } />
+                                    <View style={{marginLeft: 20, marginTop: 5}}>
+                                        <MyAppText fontType={globalFonts.balooExtrabold.fontFamily} text={props.buttonTitle} fontSize={24} textColor={globalFonts.whiteText.color}/>
+                                        {isRequesting ? 
+                                            <View style={{flex: 1, justifyContent: "center", flexDirection: "row", bottom: 100}}>
+                                                <ActivityIndicator size={90} color={globalColors.blueText.color}/>
+                                            </View>
+                                            :
+                                            null
+				                        }
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            :
+                            null
+                        }
                     </View>
                 </View>
             </Modal>
@@ -78,6 +102,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5
+    elevation: 4
   },
 });

@@ -7,7 +7,6 @@ import * as Font from 'expo-font';
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
-import { captureRef } from 'react-native-view-shot';
 
 import MyAppText from '../myAppText/text';
 import { styles } from './cameraAreaStyle';
@@ -49,7 +48,32 @@ export default function AreaController(props) {
 	
 	function showModal(file, base64) {
 		// setImage(file);
-		callTextRecognition(file, base64);		
+		// callTextRecognition(file, base64);
+		setModalVisible(true);
+	}
+
+	async function downloadAudioFile(propsModal) {
+		props.route.params.functionHandleStatusRequestion(true);
+
+		const uri = "http://192.168.0.103:3000/health";
+		let fileUri = FileSystem.documentDirectory + "audio.mp3";
+
+		await FileSystem.downloadAsync(uri, fileUri)
+		.then(({ uri }) => {
+			saveFile(uri, propsModal);
+		})
+		.catch(error => {
+			console.error(error);
+		})
+	}
+
+	async function saveFile(fileUri, propsModal) {
+		const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+		if (status === "granted") {
+			const asset = await MediaLibrary.createAssetAsync(fileUri);
+			await MediaLibrary.createAlbumAsync("Download", asset, false);
+			propsModal.functionHandleRequestModal(false);
+		}
 	}
 
 	async function callTextRecognition(file, base64) {
@@ -141,6 +165,8 @@ export default function AreaController(props) {
 						modalTitle={text.areaCamera.modalTitle}
 						buttonIcon={text.areaCamera.buttonIcon}
 						buttonTitle={text.areaCamera.buttonTitle} 
+						buttonIsVisible={true}
+						buttonFunction={{ functionHandleModalButton: downloadAudioFile }}
 						modalVisible={modalVisible} 
 						closeFunction={setModalVisible}
 					/> 
@@ -149,7 +175,7 @@ export default function AreaController(props) {
 				}
 				{isRequesting ? 
 					<View style={{flex: 1, justifyContent: "center", flexDirection: "row"}}>
-						<ActivityIndicator size={90} color={globalColors.blueText.color} />
+						<ActivityIndicator size={90} color={globalColors.blueText.color}/>
 					</View>
 					: 
 					null
