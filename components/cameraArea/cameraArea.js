@@ -7,6 +7,7 @@ import * as Font from 'expo-font';
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
+import { Audio } from 'expo-av';
 
 import MyAppText from '../myAppText/text';
 import { styles } from './cameraAreaStyle';
@@ -48,19 +49,18 @@ export default function AreaController(props) {
 	
 	function showModal(file, base64) {
 		// setImage(file);
-		// callTextRecognition(file, base64);
-		setModalVisible(true);
+		callTextRecognition(file, base64);
 	}
 
-	async function downloadAudioFile(propsModal) {
+	async function downloadAudioFile(propsModal) {		
 		props.route.params.functionHandleStatusRequestion(true);
 
 		const uri = "http://192.168.0.103:3000/health";
-		let fileUri = FileSystem.documentDirectory + "audio.mp3";
+		let fileUri = FileSystem.documentDirectory + "transcription.mp3";
 
 		await FileSystem.downloadAsync(uri, fileUri)
 		.then(({ uri }) => {
-			saveFile(uri, propsModal);
+			saveFile(uri, propsModal);			
 		})
 		.catch(error => {
 			console.error(error);
@@ -72,7 +72,21 @@ export default function AreaController(props) {
 		if (status === "granted") {
 			const asset = await MediaLibrary.createAssetAsync(fileUri);
 			await MediaLibrary.createAlbumAsync("Download", asset, false);
+
 			propsModal.functionHandleRequestModal(false);
+			playAudioFile(fileUri);
+		}
+	}
+
+	async function playAudioFile(fileUri) {
+		const soundObject = new Audio.Sound();
+		try {
+			const filePath = await FileSystem.getInfoAsync(fileUri);
+			await soundObject.loadAsync(filePath);
+			await soundObject.playAsync();
+			// Your sound is playing!
+		} catch (error) {
+			console.log(error);
 		}
 	}
 
