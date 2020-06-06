@@ -7,7 +7,7 @@ import * as Font from 'expo-font';
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
-import { captureRef } from 'react-native-view-shot';
+import { Audio } from 'expo-av';
 
 import MyAppText from '../myAppText/text';
 import { styles } from './cameraAreaStyle';
@@ -49,7 +49,45 @@ export default function AreaController(props) {
 	
 	function showModal(file, base64) {
 		// setImage(file);
-		callTextRecognition(file, base64);		
+		callTextRecognition(file, base64);
+	}
+
+	async function downloadAudioFile(propsModal) {		
+		props.route.params.functionHandleStatusRequestion(true);
+
+		const uri = "http://192.168.0.103:3000/health";
+		let fileUri = FileSystem.documentDirectory + "transcription.mp3";
+
+		await FileSystem.downloadAsync(uri, fileUri)
+		.then(({ uri }) => {
+			saveFile(uri, propsModal);			
+		})
+		.catch(error => {
+			console.error(error);
+		})
+	}
+
+	async function saveFile(fileUri, propsModal) {
+		const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+		if (status === "granted") {
+			const asset = await MediaLibrary.createAssetAsync(fileUri);
+			await MediaLibrary.createAlbumAsync("Download", asset, false);
+
+			propsModal.functionHandleRequestModal(false);
+			playAudioFile(fileUri);
+		}
+	}
+
+	async function playAudioFile(fileUri) {
+		const soundObject = new Audio.Sound();
+		try {
+			const filePath = await FileSystem.getInfoAsync(fileUri);
+			await soundObject.loadAsync(filePath);
+			await soundObject.playAsync();
+			// Your sound is playing!
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	async function callTextRecognition(file, base64) {
@@ -78,6 +116,38 @@ export default function AreaController(props) {
 		}
 	}
 
+	async function handleButtonClick(value) {
+		if(value === text.areaCamera.inputPlaceholder){
+			alert("Favor digitar algo");
+		} else if(value === "") {
+			alert("Favor digitar algo");
+		} else {
+			try {
+				await fetch('http://192.168.0.103:3000/tts', {
+					method: 'POST',
+					headers: {
+					  Accept: 'application/json',
+					  'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						accept: text.tts.accept,
+						text: value,
+						voice: text.tts.voice,
+					})
+				})
+				// .then(response => response.json())
+				.then(json => {
+					setRequestStatus(false);
+					setModalText(value);
+					setModalVisible(true);
+				})
+			} catch (error) {
+				setRequestStatus(false);
+				alert(error);
+			}
+		}
+	}
+
     return (
 		<>
 			<View style={[globalAlignments.marginApp, globalAlignments.marginComponentToComponent]}>
@@ -100,39 +170,44 @@ export default function AreaController(props) {
 						</View>
 					</TouchableOpacity>
 					<View style={{ marginTop: 20}}>
-						{ loadedFont ? (
-							<View style={{ flexDirection: "row" }}>
-								<View style={{ flex: 1, marginTop: 5}}>
-									<TextInput
-										underlineColorAndroid="white"
-										style={[styles.input, isFocused ? styles.inputFocus : styles.input]}
-										onChangeText={text => setText(text)}
-										editable={!isRequesting}
-										onFocus={() => {
-											isRequesting ? 
-												function(){}
-											:
-												focusHandler()
-										}}
-										value={value}
-										underlineColorAndroid='rgba(0,0,0,0)'
-									/>
-								</View>
-								<View style={{ marginLeft: 20 }}>
-									<TouchableOpacity style={styles.buttonIcon}>
-										<Text style={{textAlign: "center"}}>
-											<FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ icons.iconFaMicrophone } size={ 20 } />
-										</Text>
-									</TouchableOpacity>
-								</View>
+						<View style={{ flexDirection: "row" }}>
+							<View style={{ flex: 1, marginTop: 5}}>
+								<TextInput
+									underlineColorAndroid="white"
+									style={[styles.input, isFocused ? styles.inputFocus : styles.input]}
+									onChangeText={text => setText(text)}
+									editable={!isRequesting}
+									onFocus={() => {
+										isRequesting ? 
+											function(){}
+										:
+											focusHandler()
+									}}
+									value={value}
+									underlineColorAndroid='rgba(0,0,0,0)'
+								/>
 							</View>
-						) : (
-							<TextInput
-								style={{ height: 40, borderColor: 'gray', borderBottomWidth: 1}}
-								onChangeText={text => onChangeText(text)}
-								value={value}
-							/>
-						)}
+							<View style={{ marginLeft: 20 }}>
+								<TouchableOpacity style={styles.buttonIcon}>
+									<Text style={{textAlign: "center"}}>
+										<FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ icons.iconFaMicrophone } size={ 20 } />
+									</Text>
+								</TouchableOpacity>
+							</View>
+						</View>
+					</View>
+					<View style={{marginTop: 30}}>
+						<TouchableOpacity style={{
+							backgroundColor: value === text.areaCamera.inputPlaceholder || value === "" ? globalFonts.darkGrey.color : globalColors.blueText.color,
+							alignItems: "center", justifyContent: "center", 
+							borderRadius: 20,
+							paddingTop: 10,
+							paddingBottom: 20
+						}}
+						onPress={() => handleButtonClick(value)}
+						>
+							<FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ icons.iconFaBullhorn } size={ 40 }/>							
+						</TouchableOpacity>
 					</View>
 				</View>
 				{modalVisible ? 
@@ -141,6 +216,8 @@ export default function AreaController(props) {
 						modalTitle={text.areaCamera.modalTitle}
 						buttonIcon={text.areaCamera.buttonIcon}
 						buttonTitle={text.areaCamera.buttonTitle} 
+						buttonIsVisible={true}
+						buttonFunction={{ functionHandleModalButton: downloadAudioFile }}
 						modalVisible={modalVisible} 
 						closeFunction={setModalVisible}
 					/> 
@@ -149,7 +226,7 @@ export default function AreaController(props) {
 				}
 				{isRequesting ? 
 					<View style={{flex: 1, justifyContent: "center", flexDirection: "row"}}>
-						<ActivityIndicator size={90} color={globalColors.blueText.color} />
+						<ActivityIndicator size={90} color={globalColors.blueText.color}/>
 					</View>
 					: 
 					null
