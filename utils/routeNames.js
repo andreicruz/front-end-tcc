@@ -12,4 +12,8 @@ export const routes = [
         route: 'takePhoto',
         title: 'Câmera'
     },
+    {  
+        route: 'challengeArea',
+        title: 'Desafios'
+    },
 ];

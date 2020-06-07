@@ -13,6 +13,7 @@ import { createDrawerNavigator,
 
 import Home from '../home/home';
 import CameraArea from '../cameraArea/cameraArea';
+import ChallengeArea from '../challengeArea/challengeArea';
 import CameraComponent from '../camera/camera';
 
 import { routes } from '../../utils/routeNames';
@@ -91,6 +92,12 @@ export const Routes = (props) => {
                 options={{ headerShown: false }}
                 initialParams={{ functionHandleStatusRequestion: handleStatusRequesting }}
             />
+            <Stack.Screen
+                name={routes[3].route} 
+                component={ChallengeArea}
+                options={{ title: routes[3].title }}
+                initialParams={{ functionHandleStatusRequestion: handleStatusRequesting }}
+            />
         </Stack.Navigator>
     );
 }
@@ -160,6 +167,25 @@ function CustomDrawerContent(props) {
                                 labelStyle={[styles.label, {fontFamily: 'Baloo-Tamma-SemiBold'}]}/>
                         ) : (
                             <DrawerItem label="Câmera" onPress={() => props.navigation.navigate(routes[1].route)} labelStyle={[styles.label]}/>
+                        )}                        
+                    </View>
+                </View>
+                <View style={{flexDirection: "row"}}>
+                    <View style={{marginTop: 20}}>
+                        <FontAwesomeIcon color={ globalFonts.blueText.color } icon={ icons.iconFaList } size={ 30 } />
+                    </View>
+                    <View style={{marginTop: 10}}>
+                        { loadedFont ? (
+                            <DrawerItem label="Desafios" onPress={() => {
+                                    isRequesting ? 
+                                        function(){}
+                                    :
+                                        props.navigation.navigate(routes[3].route, { functionHandleStatusRequestion: handleStatusRequesting})
+                                }
+                            } 
+                                labelStyle={[styles.label, {fontFamily: 'Baloo-Tamma-SemiBold'}]}/>
+                        ) : (
+                            <DrawerItem label="Desafios" onPress={() => props.navigation.navigate(routes[3].route)} labelStyle={[styles.label]}/>
                         )}                        
                     </View>
                 </View>
