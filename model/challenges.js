@@ -7,11 +7,11 @@ export const objects = [
         subtitle: 'Desafios', 
         route: 'cameraAarea',
         challenges: [
-            { id: 1 },
-            { id: 2 },
-            { id: 3 },
-            { id: 4 },
-            { id: 5 },
+            { id: 1, idDesafio: 1, resposta: 'PATO' },
+            { id: 2, idDesafio: 1, resposta: 'PATO' },
+            { id: 3, idDesafio: 1, resposta: 'PATO' },
+            { id: 4, idDesafio: 1, resposta: 'PATO' },
+            { id: 5, idDesafio: 1, resposta: 'PATO' },
         ]
     },
     { 
@@ -20,11 +20,11 @@ export const objects = [
         subtitle: 'Desafios', 
         route: 'cameraAarea',
         challenges: [
-            { id: 1 },
-            { id: 2 },
-            { id: 3 },
-            { id: 4 },
-            { id: 5 },
+            { id: 1, idDesafio: 2, resposta: 'PATO' },
+            { id: 2, idDesafio: 2, resposta: 'PATO' },
+            { id: 3, idDesafio: 2, resposta: 'PATO' },
+            { id: 4, idDesafio: 2, resposta: 'PATO' },
+            { id: 5, idDesafio: 2, resposta: 'PATO' },
         ]
     },
 ]

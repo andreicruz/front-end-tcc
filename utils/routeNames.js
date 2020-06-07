@@ -16,4 +16,8 @@ export const routes = [
         route: 'challengeArea',
         title: 'Desafios'
     },
+    {  
+        route: 'challenge',
+        title: 'Desafio'
+    },
 ];

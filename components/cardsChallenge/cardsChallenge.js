@@ -1,10 +1,8 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import MyAppText from '../myAppText/text';
 import { View,Text } from 'react-native';
 import { styles } from './styles';
 import { globalFonts } from '../../utils/globalStyles';
-import { icons } from '../../utils/icons';
 import ListChallenges from './listChallenges';
 
 export default function CardChallenge(props) {
@@ -17,7 +15,7 @@ export default function CardChallenge(props) {
                     </View>
                     <View style={{ flexDirection: "row" }}>
                         {props.object.challenges.map(challenge => {
-                            return (<ListChallenges key={challenge.id} title={challenge.id}/>)
+                            return (<ListChallenges key={challenge.id} navigation={props.navigation} challenge={challenge}/>)
                         })}
                     </View>
                 </View>

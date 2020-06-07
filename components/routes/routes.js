@@ -15,6 +15,7 @@ import Home from '../home/home';
 import CameraArea from '../cameraArea/cameraArea';
 import ChallengeArea from '../challengeArea/challengeArea';
 import CameraComponent from '../camera/camera';
+import Challenge from '../challenge/challenge';
 
 import { routes } from '../../utils/routeNames';
 
@@ -96,6 +97,12 @@ export const Routes = (props) => {
                 name={routes[3].route} 
                 component={ChallengeArea}
                 options={{ title: routes[3].title }}
+                initialParams={{ functionHandleStatusRequestion: handleStatusRequesting }}
+            />
+            <Stack.Screen
+                name={routes[4].route} 
+                component={Challenge}
+                options={{ title: routes[4].title }}
                 initialParams={{ functionHandleStatusRequestion: handleStatusRequesting }}
             />
         </Stack.Navigator>
