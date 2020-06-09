@@ -1,4 +1,7 @@
 import { icons } from '../utils/icons';
+import * as object from '../utils/imagesChallenge';
+
+const images = object.images;
 
 export const objects = [
     { 
@@ -7,11 +10,11 @@ export const objects = [
         subtitle: 'Desafios', 
         route: 'cameraAarea',
         challenges: [
-            { id: 1, idDesafio: 1, resposta: 'PATO' },
-            { id: 2, idDesafio: 1, resposta: 'PATO' },
-            { id: 3, idDesafio: 1, resposta: 'PATO' },
-            { id: 4, idDesafio: 1, resposta: 'PATO' },
-            { id: 5, idDesafio: 1, resposta: 'PATO' },
+            { id: 1, challengeId: 1, answer: 'PATO', image: images[0].path },
+            { id: 2, challengeId: 1, answer: 'PATO' },
+            { id: 3, challengeId: 1, answer: 'PATO' },
+            { id: 4, challengeId: 1, answer: 'PATO' },
+            { id: 5, challengeId: 1, answer: 'PATO' },
         ]
     },
     { 
@@ -20,11 +23,11 @@ export const objects = [
         subtitle: 'Desafios', 
         route: 'cameraAarea',
         challenges: [
-            { id: 1, idDesafio: 2, resposta: 'PATO' },
-            { id: 2, idDesafio: 2, resposta: 'PATO' },
-            { id: 3, idDesafio: 2, resposta: 'PATO' },
-            { id: 4, idDesafio: 2, resposta: 'PATO' },
-            { id: 5, idDesafio: 2, resposta: 'PATO' },
+            { id: 1, challengeId: 2, answer: 'PATO' },
+            { id: 2, challengeId: 2, answer: 'PATO' },
+            { id: 3, challengeId: 2, answer: 'PATO' },
+            { id: 4, challengeId: 2, answer: 'PATO' },
+            { id: 5, challengeId: 2, answer: 'PATO' },
         ]
     },
 ]
