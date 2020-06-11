@@ -27,5 +27,13 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         // padding: 10,
         // alignItems: "center",
-    }
+    },
+    flag: {
+        alignItems: 'center',
+        bottom: "-40%",
+        borderRadius: 6,
+        justifyContent: 'center',
+        paddingHorizontal: 10,
+        position: 'absolute',
+    },
 });

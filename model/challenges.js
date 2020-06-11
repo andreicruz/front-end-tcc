@@ -10,11 +10,11 @@ export const objects = [
         subtitle: 'Desafios', 
         route: 'cameraAarea',
         challenges: [
-            { id: 1, challengeId: 1, answer: 'PATO', image: images[0].path },
-            { id: 2, challengeId: 1, answer: 'PATO' },
-            { id: 3, challengeId: 1, answer: 'PATO' },
-            { id: 4, challengeId: 1, answer: 'PATO' },
-            { id: 5, challengeId: 1, answer: 'PATO' },
+            { id: 1, idDisplay: 1, challengeId: 1, answer: 'PATO', image: images[0].path, complete: false },
+            { id: 2, idDisplay: 2, challengeId: 1, answer: 'PATO', complete: false  },
+            { id: 3, idDisplay: 3, challengeId: 1, answer: 'PATO', complete: false  },
+            { id: 4, idDisplay: 4, challengeId: 1, answer: 'PATO', complete: false  },
+            { id: 5, idDisplay: 5, challengeId: 1, answer: 'PATO', complete: false  },
         ]
     },
     { 
@@ -23,11 +23,11 @@ export const objects = [
         subtitle: 'Desafios', 
         route: 'cameraAarea',
         challenges: [
-            { id: 1, challengeId: 2, answer: 'PATO' },
-            { id: 2, challengeId: 2, answer: 'PATO' },
-            { id: 3, challengeId: 2, answer: 'PATO' },
-            { id: 4, challengeId: 2, answer: 'PATO' },
-            { id: 5, challengeId: 2, answer: 'PATO' },
+            { id: 6, idDisplay: 1, challengeId: 2, answer: 'PATO', complete: false  },
+            { id: 7, idDisplay: 2, challengeId: 2, answer: 'PATO', complete: false  },
+            { id: 8, idDisplay: 3, challengeId: 2, answer: 'PATO', complete: false  },
+            { id: 9, idDisplay: 4, challengeId: 2, answer: 'PATO', complete: false  },
+            { id: 10, idDisplay: 5, challengeId: 2, answer: 'PATO', complete: false  },
         ]
     },
 ]

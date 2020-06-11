@@ -9,7 +9,7 @@ export default function CardChallenge(props) {
     return (
         <View style={styles.card}>
             <View style={{flexDirection: "row", backgroundColor: "white", borderRadius: 20}}>
-                <View style={{flexDirection: "column", flex: 1, paddingVertical: 40, paddingHorizontal: 40}}>
+                <View style={{flexDirection: "column", flex: 1, padding: 35}}>
                     <View>
                         <MyAppText text={props.object.title} fontSize={22} textColor={globalFonts.blueText.color}/>
                     </View>
