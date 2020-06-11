@@ -8,8 +8,6 @@ import { AsyncStorage } from 'react-native';
 const cards = challengeCards.objects;
 
 export default function ChallengeArea(props) {
-    const [ newCards, setNewCards ] = useState([]);
-
     useEffect(() => {
         (async () => {
             // await storeItem();
@@ -17,7 +15,7 @@ export default function ChallengeArea(props) {
             // await removeAllKeys();
         })();
 
-    }, []);
+    });
 
 
     async function storeItem() {

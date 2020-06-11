@@ -21,7 +21,7 @@ export default function Challenge(props) {
                 <View style={styles.borderAnswer}>
                     <View style={{ padding: 40, flexDirection: "row", justifyContent: "center" }}>
                         <View style={styles.answer}>
-                            <MyAppText text={"PATO"} fontSize={22} textColor={globalFonts.blackText.color}/>
+                            <MyAppText text={props.route.params.object.answer} fontSize={22} textColor={globalFonts.blackText.color}/>
                         </View>
                         <View style={
                             [
@@ -41,7 +41,7 @@ export default function Challenge(props) {
                 </View> */}
             </View>
             <View>
-                <Paginator />
+                <Paginator object={props.route.params.object} navigation={props.navigation}/>
             </View>
         </View>
     );
