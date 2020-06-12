@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect } from 'react';
 import { View } from 'react-native';
 import CardChallenge from '../cardsChallenge/cardsChallenge';
 import { globalAlignments } from '../../utils/globalStyles';

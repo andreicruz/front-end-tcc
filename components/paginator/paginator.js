@@ -7,11 +7,17 @@ import { routes } from '../../utils/routeNames';
 
 export default function Paginator(props) {
     const [ pages ] = useState([1, 2, 3, 4, 5]);
-    const [ teste ] = useState({answer: "GANSO",
-    challengeId: 1,
-    complete: false,
-    id: 2,
-    idDisplay: 2});
+    // const [ teste ] = useState({answer: "GANSO",
+    // challengeId: 1,
+    // complete: false,
+    // id: 2,
+    // idDisplay: 2});
+    // props.navigation.navigate(routes[4].route, {object: teste}
+
+    function handleClickPaginator(id) {
+        props.findItem(id);
+    }
+
     return (
         <View style={{padding: 20, justifyContent: "center", alignItems: "center"}}>
             <View style={{ flexDirection: "row" }}>
@@ -25,7 +31,7 @@ export default function Paginator(props) {
                                     width: 20, 
                                     borderRadius: 20
                                 }}
-                                onPress={() =>  props.navigation.navigate(routes[4].route, {object: teste})}
+                                onPress={() => handleClickPaginator(page)}
                             />
                         </View>
                     )

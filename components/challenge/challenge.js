@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import MyAppText from '../myAppText/text';
 import { View, Image, Text } from 'react-native';
 import { globalFonts, globalAlignments, globalColors } from '../../utils/globalStyles';
@@ -7,8 +7,24 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { icons } from '../../utils/icons';
 import Paginator from '../paginator/paginator';
+import * as challengeCards from '../../model/challenges';
+import { AsyncStorage } from 'react-native';
+
 
 export default function Challenge(props) {
+    const cards = challengeCards.objects;
+
+    function handleClick(id) {
+        let pages = [];
+        cards.forEach(card => {
+            card.challenges.forEach(challenge => {
+                if(challenge.id === (id -1) || challenge.id === id || challenge.id === (id +1)) {
+                    pages.push(challenge);
+                }
+            })
+        });
+    }
+
     return (
         <View style={{flex: 1}}>
             <View style={[ globalAlignments.marginApp, { flex: 1,flexDirection: "column"}]}>
@@ -41,7 +57,7 @@ export default function Challenge(props) {
                 </View> */}
             </View>
             <View>
-                <Paginator object={props.route.params.object} navigation={props.navigation}/>
+                <Paginator object={props.route.params.object} navigation={props.navigation} findItem={handleClick}/>
             </View>
         </View>
     );
