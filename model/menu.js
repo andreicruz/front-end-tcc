@@ -14,7 +14,7 @@ export const objects = [
     { 
         id: 2, 
         title: 'Desafios', 
-        route: 'Camerxa',
+        route: 'challengeArea',
         icon: icons.iconFaList, 
         leftCard: { 
             title: 'Desafios',

@@ -31,8 +31,14 @@ export const globalColors = StyleSheet.create({
         color: "white"
     },
     blueText: {
-        color: "#1b75bc"
-    }
+        color: "#1b75bc",
+    },
+    green: {
+        color: "#32a852",
+    },
+    red: { 
+        color: "#f53a25",
+    },
 });
 
 export const globalFonts = StyleSheet.create({
