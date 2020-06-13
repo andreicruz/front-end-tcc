@@ -7,15 +7,17 @@ import { routes } from '../../utils/routeNames';
 
 export default function Paginator(props) {
     const [ pages ] = useState([1, 2, 3, 4, 5]);
-    // const [ teste ] = useState({answer: "GANSO",
-    // challengeId: 1,
-    // complete: false,
-    // id: 2,
-    // idDisplay: 2});
-    // props.navigation.navigate(routes[4].route, {object: teste}
 
     function handleClickPaginator(id) {
-        props.findItem(id);
+        const navigate = props.findItem(id);
+        
+        if(navigate.length === 1){
+            props.navigation.navigate(routes[4].route, {object: navigate[0]})
+        } else if(navigate[0].complete) {
+            props.navigation.navigate(routes[4].route, {object: navigate[1]})
+        } else {
+            alert('n');
+        }
     }
 
     return (

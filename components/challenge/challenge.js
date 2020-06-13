@@ -18,11 +18,13 @@ export default function Challenge(props) {
         let pages = [];
         cards.forEach(card => {
             card.challenges.forEach(challenge => {
-                if(challenge.id === (id -1) || challenge.id === id || challenge.id === (id +1)) {
+                if(challenge.id === (id -1) || challenge.id === id) {
                     pages.push(challenge);
                 }
             })
         });
+
+        return pages
     }
 
     return (
