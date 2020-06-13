@@ -13,6 +13,7 @@ import { AsyncStorage } from 'react-native';
 
 export default function Challenge(props) {
     const cards = challengeCards.objects;
+    const [challenge, setChallenge] = useState({});
 
     function handleClick(id) {
         let pages = [];
@@ -27,39 +28,65 @@ export default function Challenge(props) {
         return pages
     }
 
+
+    useEffect(() => {
+        setChallenge(props.route.params.object);
+    })
+
+    function teste(){
+        setChallenge(challenge.entry = 'PATO')
+        setChallenge(challenge.isCorrect = true)
+        // alert('p')
+    }
+
     return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, marginTop: 40}}>
             <View style={[ globalAlignments.marginApp, { flex: 1,flexDirection: "column"}]}>
                 <View>
                     <Image 
-                        source={props.route.params.object.image}
+                        source={challenge.image}
                         style={styles.image}
                     />
                 </View>
-                <View style={styles.borderAnswer}>
+                <View style={[styles.borderAnswer, {marginTop: 20}]}>
                     <View style={{ padding: 40, flexDirection: "row", justifyContent: "center" }}>
                         <View style={styles.answer}>
-                            <MyAppText text={props.route.params.object.answer} fontSize={22} textColor={globalFonts.blackText.color}/>
+                            {challenge.entry !== '' ?
+                                <MyAppText text={challenge.entry} fontSize={22} textColor={globalFonts.blackText.color}/>
+                                :
+                                <MyAppText text={"RESPOSTA"} fontSize={22} textColor={globalFonts.blackText.color}/>                            
+                            }
+
                         </View>
-                        <View style={
-                            [
-                                styles.flag, 
-                                {
-                                    backgroundColor: props.route.params.object.complete ? globalColors.green.color : globalColors.red.color
-                                }
-                            ]}>
-                            <MyAppText text={"CORRETO"} fontSize={22} textColor={props.route.params.object.complete ? globalFonts.whiteText.color : "white"}/>
-                        </View>
+                        {challenge.isCorrect ?
+                            <View style={
+                                [
+                                    styles.flag, 
+                                    {
+                                        backgroundColor:challenge.isCorrect? globalColors.green.color : globalColors.red.color
+                                    }
+                                ]}>
+                                <MyAppText 
+                                    text={
+                                        challenge.isCorrect && challenge.entry !== '' ? 
+                                        "CORRETO"
+                                        :
+                                        "INCORRETO"
+                                    } 
+                                    fontSize={22}
+                                    textColor={ globalFonts.whiteText.color}/>
+                            </View>
+                            :
+                            null
+                        }
                     </View>
                 </View>
-                {/* <View style={{marginTop: 40, alignItems: "center", justifyContent: "center"}}>
-                    <TouchableOpacity style={[styles.roundedButton]}>
-                        <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ icons.iconFaCamera } size={ 30 } />
-                    </TouchableOpacity>
-                </View> */}
+                <TouchableOpacity style={{padding: 20, marginTop: 40, alignItems: "center", justifyContent: "center", backgroundColor: globalColors.blueText.color, borderRadius: 6}} onPress={() => teste()}>
+                    <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ icons.iconFaCamera } size={ 30 } />
+                </TouchableOpacity>
             </View>
             <View>
-                <Paginator object={props.route.params.object} navigation={props.navigation} findItem={handleClick}/>
+                <Paginator object={challenge} navigation={props.navigation} findItem={handleClick}/>
             </View>
         </View>
     );
