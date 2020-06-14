@@ -36,4 +36,12 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 10,
         position: 'absolute',
     },
+    activity: {
+        alignItems: 'center',
+        borderRadius: 6,
+        bottom: 20,
+        justifyContent: 'center',
+        paddingHorizontal: 10,
+        position: 'absolute',
+    },
 });

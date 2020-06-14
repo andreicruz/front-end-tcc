@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import MyAppText from '../myAppText/text';
-import { View, Image, Text } from 'react-native';
+import { View, Image, ActivityIndicator } from 'react-native';
 import { globalFonts, globalAlignments, globalColors } from '../../utils/globalStyles';
 import { styles } from './challengeStyle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -9,11 +9,16 @@ import { icons } from '../../utils/icons';
 import Paginator from '../paginator/paginator';
 import * as challengeCards from '../../model/challenges';
 import { AsyncStorage } from 'react-native';
-
+import { routes } from '../../utils/routeNames';
 
 export default function Challenge(props) {
     const cards = challengeCards.objects;
     const [challenge, setChallenge] = useState({});
+    const [isRequesting, setRequestStatus] = useState(false);
+
+    useEffect(() => {
+        setChallenge(props.route.params.object);
+    })
 
     function handleClick(id) {
         let pages = [];
@@ -28,15 +33,45 @@ export default function Challenge(props) {
         return pages
     }
 
+    async function callTextRecognition(file, base64) {
+		setRequestStatus(true);
+		// props.route.params.functionHandleStatusRequestion(true);
+		try {
+			await fetch('http://192.168.0.103:3000/optical', {
+				method: 'POST',
+				headers: {
+				  Accept: 'application/json',
+				  'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+				  file: base64
+				})
+			})
+			.then(response => response.json())
+			.then(json => {
+                verifyAnswer(json.data);
+                setRequestStatus(false);
+			})
+		} catch (error) {
+			setRequestStatus(false);
+			return error;
+		}
+	}
 
-    useEffect(() => {
-        setChallenge(props.route.params.object);
-    })
+	function cameraHandler() {
+		props.navigation.navigate(routes[2].route, { functionShowModal: callTextRecognition});
+    }
+    
+    function verifyAnswer(answer){
+        let newAnswer = answer.toUpperCase().replace(/(\r\n|\n|\r)/gm, "");
 
-    function teste(){
-        setChallenge(challenge.entry = 'PATO')
-        setChallenge(challenge.isCorrect = true)
-        // alert('p')
+        if(newAnswer === challenge.answer) {
+            setChallenge(challenge.entry = newAnswer);
+            setChallenge(challenge.isCorrect = true);
+        } else {
+            setChallenge(challenge.entry = newAnswer);
+            setChallenge(challenge.isCorrect = false);
+        }
     }
 
     return (
@@ -58,7 +93,14 @@ export default function Challenge(props) {
                             }
 
                         </View>
-                        {challenge.isCorrect ?
+                        {isRequesting ? 
+                            <View style={ styles.activity}>
+                                <ActivityIndicator size={90} color={globalColors.blueText.color}/>
+                            </View>
+                            : 
+                            null
+                        }
+                        {challenge.entry !== '' ?
                             <View style={
                                 [
                                     styles.flag, 
@@ -81,7 +123,10 @@ export default function Challenge(props) {
                         }
                     </View>
                 </View>
-                <TouchableOpacity style={{padding: 20, marginTop: 40, alignItems: "center", justifyContent: "center", backgroundColor: globalColors.blueText.color, borderRadius: 6}} onPress={() => teste()}>
+                <TouchableOpacity 
+                    style={{padding: 20, marginTop: 40, alignItems: "center", justifyContent: "center", backgroundColor: globalColors.blueText.color, borderRadius: 6}}
+                    onPress={() => cameraHandler()}
+                    >
                     <FontAwesomeIcon color={ globalFonts.whiteText.color } icon={ icons.iconFaCamera } size={ 30 } />
                 </TouchableOpacity>
             </View>
