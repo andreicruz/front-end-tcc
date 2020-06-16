@@ -13,6 +13,7 @@ export default function ChallengeArea(props) {
 
     useEffect(() => {
         (async () => {
+            // await removeAllKeys();
             await getAllKeys();
         })();
 

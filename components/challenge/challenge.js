@@ -62,17 +62,33 @@ export default function Challenge(props) {
 		props.navigation.navigate(routes[2].route, { functionShowModal: callTextRecognition});
     }
     
-    function verifyAnswer(answer){
+    async function verifyAnswer(answer){
         let newAnswer = answer.toUpperCase().replace(/(\r\n|\n|\r)/gm, "");
 
         if(newAnswer === challenge.answer) {
             setChallenge(challenge.entry = newAnswer);
             setChallenge(challenge.isCorrect = true);
+            setChallenge(challenge.complete = true);
+
+            var storeIndex = challenge.id.toString();
+            await storeItem(storeIndex);
         } else {
             setChallenge(challenge.entry = newAnswer);
             setChallenge(challenge.isCorrect = false);
+            setChallenge(challenge.false = true);
         }
     }
+
+    async function storeItem(id) {
+        try {
+            await AsyncStorage.setItem(
+                'desafio_',
+                id
+            );
+        } catch (error) {
+          // Error retrieving data
+        }
+    };
 
     return (
         <View style={{flex: 1, marginTop: 40}}>
