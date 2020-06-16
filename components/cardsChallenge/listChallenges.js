@@ -10,7 +10,9 @@ const cards = challengeCards.objects;
 
 export default function ListChallenges(props) {
     function navigate() {
-        if(props.challenge.complete) {
+        if(!props.isFirstEntry && props.challenge.id === 1 ){
+            props.navigation.navigate(routes[4].route, {object: props.challenge})
+        } else if(props.challenge.complete) {
             props.navigation.navigate(routes[4].route, {object: props.challenge})
         } else if(findPreviuoslyCard(props.challenge.id)) {
             props.navigation.navigate(routes[4].route, {object: props.challenge})

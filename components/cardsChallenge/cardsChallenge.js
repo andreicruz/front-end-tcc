@@ -15,7 +15,7 @@ export default function CardChallenge(props) {
                     </View>
                     <View style={{ flexDirection: "row" }}>
                         {props.object.challenges.map(challenge => {
-                            return (<ListChallenges key={challenge.id} navigation={props.navigation} challenge={challenge}/>)
+                            return (<ListChallenges key={challenge.id} navigation={props.navigation} challenge={challenge} isFirstEntry={props.isFirstEntry}/>)
                         })}
                     </View>
                 </View>

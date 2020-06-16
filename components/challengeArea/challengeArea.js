@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react';
+import React, {useState, useEffect } from 'react';
 import { View } from 'react-native';
 import CardChallenge from '../cardsChallenge/cardsChallenge';
 import { globalAlignments } from '../../utils/globalStyles';
@@ -8,11 +8,12 @@ import { AsyncStorage } from 'react-native';
 const cards = challengeCards.objects;
 
 export default function ChallengeArea(props) {
+    const [ hasDoneOneChallenge, setFirstTimeEntry ] = useState();
+    const [ index, setIndex ] = useState(1);
+
     useEffect(() => {
         (async () => {
-            // await storeItem();
             await getAllKeys();
-            // await removeAllKeys();
         })();
 
     });
@@ -22,16 +23,17 @@ export default function ChallengeArea(props) {
         var value = null;
         try {
             await AsyncStorage.setItem(
-                'desafio_1',
-                'true'
-              );
+                'hasDoneOneChallenge',
+                'false'
+            );
         } catch (error) {
           // Error retrieving data
-        } 
-
-        console.log(value);
+        }
     };
 
+    function changeStatusEntry(status) {
+        setFirstTimeEntry(status);
+    }
 
 
     async function removeAllKeys() {
@@ -48,7 +50,14 @@ export default function ChallengeArea(props) {
         try {
             const value = await AsyncStorage.getAllKeys();
             const items = await AsyncStorage.multiGet(value);
-            createNewCards(items);
+
+            if(items.length === 0) {
+                await storeItem();
+                changeStatusEntry(false);
+            } else if(items.length > 1) {
+                createNewCards(items);
+            }
+
         } catch (error) {
           // Error retrieving data
         }
@@ -69,7 +78,7 @@ export default function ChallengeArea(props) {
     return (
         <View style={[ globalAlignments.marginApp]}>
             {cards.map(item => {
-                return (<CardChallenge key={item.id} navigation={props.navigation} object={item}/>)
+                return (<CardChallenge key={item.id} navigation={props.navigation} object={item} isFirstEntry={hasDoneOneChallenge}/>)
             })}
         </View>
     );
